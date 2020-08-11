@@ -1,0 +1,12 @@
+#! /bin/sh
+
+EDUROAM_RADIUS="ip.do.ser.ver"
+EDUROAM_PASS="Senha do RADIUS"
+
+DIR="/usr/share/libpam-script"
+DEST=$(mktemp)
+sed -e "s/PAM_USER/$PAM_USER/" -e "s/PAM_AUTHTOK/$PAM_AUTHTOK/" < $DIR/rad-auth-model.conf > $DEST
+/usr/bin/eapol_test -c $DEST -a $EDUROAM_RADIUS -s $EDUROAM_PASS > /dev/null
+STATUS=$?
+rm $DEST
+exit $STATUS

@@ -15,7 +15,7 @@ Para instalar os hacks, é preciso ter suporte ao módulo de scripts do PAM. Fei
   * instalar as dependências;
   * configurar o PAM: pode usar `pam-auth-update` ou editar o arquivo correspondente em `/etc/pam.d`;
   * copiar o conteúdo do módulo específico para o diretório configurado;
-  * editar o script para usar o diretório (está como padrão do debian).
+  * editar o script para usar o diretório (está como padrão do debian) e outros parâmetros (no caso do RADIUS).
 
 No escopo desse executável, existirão diversas variáveis de ambiente. Há uma documentação melhor no exemplo `logscript` que vem com o `libpam-script`.
 
