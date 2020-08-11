@@ -1,0 +1,6 @@
+#! /bin/sh
+
+DIR="/usr/share/libpam-script"
+python3 $DIR/oauth.py
+STATUS=$?
+exit $STATUS

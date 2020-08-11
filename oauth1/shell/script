@@ -1,0 +1,17 @@
+#! /bin/sh
+
+DEST=$(mktemp)
+COOK=$(mktemp)
+
+# estamos usando o COPACO como meio
+curl -s -L -b $COOK -c $COOK copaco.ime.usp.br/login > $DEST
+oauth_token=$(xmllint --html $DEST --xpath "string(//form/@action)"  2> /dev/null | awk -F? '{print $2}' | awk -F'&' '{print $1}' | awk -F= '{print $2}')
+callback_id=$(xmllint --html $DEST --xpath "string(//form/@action)"  2> /dev/null | awk -F? '{print $2}' | awk -F'&' '{print $2}' | awk -F= '{print $2}')
+
+# meramente verificamos se a página final devolve o NUSP
+curl -s -L -b $COOK -c $COOK -d "loginUsuario=$PAM_USER&senhaUsuario=$PAM_AUTHTOK&oauth_token=$oauth_token&callback_id=$callback_id" "https://uspdigital.usp.br/wsusuario/oauth/authorize?oauth_token=$oauth_token&callback_id=$callback_id" | grep $PAM_USER > /dev/null
+STATUS=$?
+
+rm $DEST
+rm $COOK
+exit $STATUS
